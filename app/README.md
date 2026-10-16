@@ -2,7 +2,7 @@
 
 Responsive web app for household routines, designed for an iPad Mini 5 (shared display), an iPhone 14, and a Galaxy S26 Ultra. Built with Next.js, deployed to Vercel, with Supabase for Postgres and parent authentication.
 
-Status: foundation, parent sign-in and household creation, and restricted display sessions (tasks 1.1-1.4). Display flow: a parent creates a pairing code on the home page, then enters it at `/display` on the shared device. See `docs/authorization.md` for the access design.
+Status: foundation, parent sign-in and household creation, restricted display sessions, and a proof-of-concept sample routine (tasks 1.1-1.4; 1.5 local checks done, on-device checks pending in `docs/device-checklist.md`). Display flow: a parent creates a pairing code on the home page, then enters it at `/display` on the shared device. See `docs/authorization.md` for the access design.
 
 ## Run locally
 

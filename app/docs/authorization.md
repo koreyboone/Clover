@@ -37,6 +37,10 @@ A display is its own Supabase auth user (`display-<id>@display.invalid`, `app_me
 - **Revocation.** `revoke_display_device` (parent of that household only) sets `revoked_at`; every RLS check calls `is_household_display`, which requires `revoked_at is null`, so even an unexpired access token sees nothing immediately. The server also bans the auth user so the refresh token cannot mint a new session, and unredeemed codes are deleted.
 - **Recovery.** `src/proxy.ts` refreshes the cookie. On `/display`, a missing, expired, invalid, banned, or revoked session shows the pairing screen. Re-pairing needs a new code from a parent.
 
+### Sample routine (task 1.5 proof of concept)
+
+`sample_tasks` holds three tasks per household and exists only to prove the flow; group 2 replaces it. Clients have SELECT only (parents and active displays). All writes are database functions that check the caller each time: `poc_seed_sample`, `poc_rename_task`, and `poc_review_task` require a parent of the task's household; `poc_mark_task_done` requires an active, non-revoked display of that household. A child tap moves a task to `awaiting_verification` (not complete); approve completes it, reject returns it to incomplete, and assist records completion. Repeated taps change nothing. Idempotency keys for these actions are task 1.6.
+
 ### Session-lifecycle concerns
 
 - Access tokens are stateless JWTs. Sign-out and ban stop refresh, but a token already issued stays cryptographically valid until `jwt_expiry` (1 hour). Revocation does not depend on this, because RLS checks the device row on every query. Anything added later must also check `is_household_display`, or it would honor a revoked token for up to an hour.
