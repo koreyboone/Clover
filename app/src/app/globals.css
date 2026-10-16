@@ -1,0 +1,49 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f8f4;
+  --fg: #1d2a20;
+  --accent: #2f7d4f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1rem;
+}
+
+.shell {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+
+h1 {
+  color: var(--accent);
+  font-size: 1.75rem;
+}
+
+.status {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid #d5dcd2;
+}
+
+/* Tablet (iPad Mini 5 shared display): larger type and touch targets. */
+@media (min-width: 744px) {
+  html {
+    font-size: 1.25rem;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+}
