@@ -46,6 +46,10 @@ Supabase's standard local ports are configured in `supabase/config.toml` (API 55
 - **Sign out:** use **Sign out** at the bottom of the parent page. The route calls Supabase Auth's default global sign-out, which can sign this account out on its other browsers/devices too; sign in again where needed. Already-issued access tokens may remain valid until their normal expiry.
 - To exercise the current sample flow, create the sample routine from the household page. Rename tasks and review/assist from a parent session; a paired display can mark an incomplete task as done. This is a sample only, not scheduled routines.
 
+## Visual design and accessibility
+
+The implemented color, typography, component, responsive, and accessibility rules are documented in [`docs/visual-design-system.md`](docs/visual-design-system.md), along with the Task 1.9 before/after screenshot index and browser-emulated validation results.
+
 ## Pair and manage the shared display
 
 1. Sign in as a parent and, under the intended household, enter a display name and select **Create pairing code**.

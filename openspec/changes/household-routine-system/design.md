@@ -27,6 +27,7 @@ Task 1.9 establishes and implements the visual foundation before broader interfa
 - Start the app locally using an isolated test household, audit the current implementation, and capture indexed before screenshots of safely reachable screens and states before changing their visual presentation. Keep screenshots outside the repository and record route, state, viewport, DPR, reachability, and console errors.
 - Define and document the visual direction, design tokens, typography, colors, spacing, iconography, reusable components, and component states; implement the reusable visual foundations in the app.
 - Implement one polished representative child-display screen using existing functionality, without pulling later routine, reward, or other feature work into this task.
+- Record the implemented visual system, screenshot index, and review evidence in `app/docs/visual-design-system.md`; keep screenshot images outside the repository.
 - Document responsive rules for iPad Mini 5 portrait (768 × 1024) and landscape (1024 × 768), iPhone 14 portrait (390 × 844), and an explicitly approximate Galaxy S26 Ultra viewport (412 × 915).
 - Validate the representative screen at the target browser viewports: no unintended horizontal overflow or clipped content; normal text contrast of at least 4.5:1, large text contrast of at least 3:1, and applicable non-text contrast; keyboard-operable controls with visible focus, logical focus order, and accessible names.
 - Define and document a repeatable visual-review checklist that applies to later UI work.

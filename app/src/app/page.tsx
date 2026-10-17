@@ -2,15 +2,9 @@ import { randomUUID } from 'node:crypto';
 import { redirect } from 'next/navigation';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { createServerSupabase } from '@/lib/supabase/server';
+import { StatusMessage, TaskStatusBadge } from '@/components/ui';
 
 export const dynamic = 'force-dynamic';
-
-const STATUS_LABEL: Record<string, string> = {
-  incomplete: 'To do',
-  awaiting_verification: 'Waiting for a parent',
-  complete: 'Done',
-  assisted: 'Done with help',
-};
 
 function ReviewButton({
   taskId,
@@ -42,9 +36,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
     return (
       <main className="shell">
         <h1>Clover</h1>
-        <p className="status" data-configured="false">
+        <StatusMessage>
           Supabase is not configured. Copy .env.example to .env.local and set the values.
-        </p>
+        </StatusMessage>
       </main>
     );
   }
@@ -72,12 +66,28 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
   return (
     <main className="shell">
       <h1>Clover</h1>
-      <p>Signed in as {auth.user.email}</p>
-      {error === 'name' && <p role="alert">Enter a household name up to 100 characters.</p>}
-      {error === 'create' && <p role="alert">Could not create the household.</p>}
-      {error === 'display' && <p role="alert">Could not create the display. Check the name and try again.</p>}
-      {error === 'revoke' && <p role="alert">Could not revoke that display.</p>}
-      {error === 'routine' && <p role="alert">That change could not be applied. Refresh and try again.</p>}
+      <p className="account-line">Signed in as {auth.user.email}</p>
+      {error === 'name' && (
+        <StatusMessage role="alert" tone="error">
+          Enter a household name up to 100 characters.
+        </StatusMessage>
+      )}
+      {error === 'create' && (
+        <StatusMessage role="alert" tone="error">Could not create the household.</StatusMessage>
+      )}
+      {error === 'display' && (
+        <StatusMessage role="alert" tone="error">
+          Could not create the display. Check the name and try again.
+        </StatusMessage>
+      )}
+      {error === 'revoke' && (
+        <StatusMessage role="alert" tone="error">Could not revoke that display.</StatusMessage>
+      )}
+      {error === 'routine' && (
+        <StatusMessage role="alert" tone="error">
+          That change could not be applied. Refresh and try again.
+        </StatusMessage>
+      )}
 
       {households && households.length > 0 ? (
         households.map((h) => (
@@ -102,7 +112,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
                         <input name="title" defaultValue={t.title} maxLength={100} required aria-label="Task title" />
                         <button type="submit" className="secondary">Save</button>
                       </form>
-                      <span className="task-status">{STATUS_LABEL[t.status] ?? t.status}</span>
+                      <TaskStatusBadge status={t.status} />
                       <div className="actions">
                         {t.status === 'awaiting_verification' && (
                           <>

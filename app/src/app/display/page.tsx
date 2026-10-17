@@ -2,22 +2,20 @@ import { isAuthRetryableFetchError } from '@supabase/supabase-js';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { ClearDisplayCache, DisplayClient, type DisplaySnapshot } from './display-client';
+import { StatusMessage } from '@/components/ui';
 
 export const dynamic = 'force-dynamic';
 
-const STATUS_LABEL: Record<string, string> = {
-  incomplete: 'To do',
-  awaiting_verification: 'Waiting for a parent',
-  complete: 'Done',
-  assisted: 'Done with help',
-};
-
 function PairForm({ message }: { message?: string }) {
   return (
-    <main className="shell">
+    <main className="shell pairing-shell">
       <ClearDisplayCache />
       <h1>Pair this display</h1>
-      {message && <p role="alert">{message}</p>}
+      {message && (
+        <StatusMessage role="alert" tone="error">
+          {message}
+        </StatusMessage>
+      )}
       <p>
         Enter a pairing code from the Clover parent page. If this display was paired before, its access may have
         expired or been removed.

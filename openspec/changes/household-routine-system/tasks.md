@@ -13,7 +13,7 @@
 
 ## Visual Design Foundation
 
-- [ ] 1.9 Start the app locally with isolated test data and capture indexed before screenshots of safely reachable screens and states before visual changes; define and document the visual direction, tokens, typography, spacing, iconography, reusable components, responsive rules, accessibility criteria, and review checklist; implement the reusable visual foundations and one polished representative child-display screen; verify contrast (WCAG 2.2 AA: 4.5:1 normal text, 3:1 large text, and applicable non-text contrast), keyboard operation, visible focus, logical focus order, accessible names, and no unintended horizontal overflow or clipped content at target browser viewports; record unreachable screens and limitations without accessing real hosted data or bypassing authorization.
+- [x] 1.9 Start the app locally with isolated test data and capture indexed before screenshots of safely reachable screens and states before visual changes; define and document the visual direction, tokens, typography, spacing, iconography, reusable components, responsive rules, accessibility criteria, and review checklist; implement the reusable visual foundations and one polished representative child-display screen; verify contrast (WCAG 2.2 AA: 4.5:1 normal text, 3:1 large text, and applicable non-text contrast), keyboard operation, visible focus, logical focus order, accessible names, and no unintended horizontal overflow or clipped content at target browser viewports; record unreachable screens and limitations without accessing real hosted data or bypassing authorization.
 
 ## 2. Household Routine Experience
 
