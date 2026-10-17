@@ -7,7 +7,7 @@
 - [x] 1.3 Implement parent sign-in, household creation, and row-level access limited to household members; verify tests show a user cannot read or change another household's data and that service credentials never reach the browser bundle.
 - [x] 1.4 Implement the restricted display session that a parent can create and revoke; verify tests show the display session can perform child actions but is denied parent functions, including requests sent directly.
 - [x] 1.5 Build the proof of concept: edit one sample routine from a phone and see it on the iPad; record a child task action and let a parent approve, reject, or record assistance; verify the flow on the iPad, iPhone, and Galaxy, including restart persistence and recovery after a temporary network disconnection.
-- [ ] 1.6 Implement idempotency keys for actions; verify tests show a repeated or concurrent submission is applied once.
+- [x] 1.6 Implement idempotency keys for actions; verify tests show a repeated or concurrent submission is applied once.
 - [ ] 1.7 Implement the stale read-only display state with last-synchronized time, disabled actions while disconnected, and refresh on reconnect, with realtime updates and a polling fallback; verify on the iPad by toggling connectivity.
 - [ ] 1.8 Document setup, deployment, signing in devices, and the display session; verify the documented steps from a clean checkout.
 

@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { redirect } from 'next/navigation';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { createServerSupabase } from '@/lib/supabase/server';
@@ -16,16 +17,19 @@ function ReviewButton({
   decision,
   label,
   secondary,
+  idempotencyKey,
 }: {
   taskId: string;
   decision: string;
   label: string;
   secondary?: boolean;
+  idempotencyKey: string;
 }) {
   return (
     <form method="post" action="/routine/review">
       <input type="hidden" name="task_id" value={taskId} />
       <input type="hidden" name="decision" value={decision} />
+      <input type="hidden" name="idempotency_key" value={idempotencyKey} />
       <button type="submit" className={secondary ? 'secondary' : undefined}>
         {label}
       </button>
@@ -83,6 +87,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
             {(tasks ?? []).filter((t) => t.household_id === h.id).length === 0 ? (
               <form method="post" action="/routine/seed">
                 <input type="hidden" name="household_id" value={h.id} />
+                <input type="hidden" name="idempotency_key" value={randomUUID()} />
                 <button type="submit">Create sample routine</button>
               </form>
             ) : (
@@ -93,6 +98,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
                     <li key={t.id} data-status={t.status}>
                       <form method="post" action="/routine/rename" className="inline-edit">
                         <input type="hidden" name="task_id" value={t.id} />
+                        <input type="hidden" name="idempotency_key" value={randomUUID()} />
                         <input name="title" defaultValue={t.title} maxLength={100} required aria-label="Task title" />
                         <button type="submit" className="secondary">Save</button>
                       </form>
@@ -100,12 +106,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ e
                       <div className="actions">
                         {t.status === 'awaiting_verification' && (
                           <>
-                            <ReviewButton taskId={t.id} decision="approve" label="Approve" />
-                            <ReviewButton taskId={t.id} decision="reject" label="Not done" secondary />
+                            <ReviewButton taskId={t.id} decision="approve" label="Approve" idempotencyKey={randomUUID()} />
+                            <ReviewButton taskId={t.id} decision="reject" label="Not done" secondary idempotencyKey={randomUUID()} />
                           </>
                         )}
                         {(t.status === 'incomplete' || t.status === 'awaiting_verification') && (
-                          <ReviewButton taskId={t.id} decision="assist" label="I helped" secondary />
+                          <ReviewButton taskId={t.id} decision="assist" label="I helped" secondary idempotencyKey={randomUUID()} />
                         )}
                       </div>
                     </li>

@@ -39,7 +39,9 @@ A display is its own Supabase auth user (`display-<id>@display.invalid`, `app_me
 
 ### Sample routine (task 1.5 proof of concept)
 
-`sample_tasks` holds three tasks per household and exists only to prove the flow; group 2 replaces it. Clients have SELECT only (parents and active displays). All writes are database functions that check the caller each time: `poc_seed_sample`, `poc_rename_task`, and `poc_review_task` require a parent of the task's household; `poc_mark_task_done` requires an active, non-revoked display of that household. A child tap moves a task to `awaiting_verification` (not complete); approve completes it, reject returns it to incomplete, and assist records completion. Repeated taps change nothing. Idempotency keys for these actions are task 1.6.
+`sample_tasks` holds three tasks per household and exists only to prove the flow; group 2 replaces it. Clients have SELECT only (parents and active displays). All writes are database functions that check the caller each time: `poc_seed_sample`, `poc_rename_task`, and `poc_review_task` require a parent of the task's household; `poc_mark_task_done` requires an active, non-revoked display of that household. A child tap moves a task to `awaiting_verification` (not complete); approve completes it, reject returns it to incomplete, and assist records completion.
+
+Each sample-routine mutation requires a caller-generated UUID idempotency key. The database stores the actor, household, action, request payload, and original result under a unique actor/key pair. Concurrent submissions with the same key wait for and return that original result; reusing the key for another action or payload is rejected. The idempotency table has no client grants or read policy. Forms include a key so resubmitting the same rendered form reuses it; a fresh render issues a fresh key. Future routine and reward mutations must follow this pattern. Pairing-code redemption separately uses atomic single-use code consumption.
 
 ### Session-lifecycle concerns
 

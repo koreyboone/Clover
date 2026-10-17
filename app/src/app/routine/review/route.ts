@@ -5,6 +5,7 @@ export async function POST(request: Request) {
     supabase.rpc('poc_review_task', {
       task_id: String(form.get('task_id') ?? ''),
       decision: String(form.get('decision') ?? ''),
+      idempotency_key: String(form.get('idempotency_key') ?? ''),
     }),
   );
 }
