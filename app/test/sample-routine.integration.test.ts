@@ -267,6 +267,45 @@ test('concurrent parent retries replay the review result without a second transi
   assert.equal((await tasksOf(parentA)).find((t) => t.id === task.id)?.status, 'complete');
 });
 
+test('an authorized display receives realtime sample-task changes', opts, async () => {
+  const { display } = await pairedDisplay(householdA, parentA);
+  const task = await freshTask(householdA);
+  let resolveSubscribed!: () => void;
+  let resolveChanged!: () => void;
+  const statuses: string[] = [];
+  const received: unknown[] = [];
+  const subscribed = new Promise<void>((resolve) => {
+    resolveSubscribed = resolve;
+  });
+  const changed = new Promise<void>((resolve) => {
+    resolveChanged = resolve;
+  });
+  const channel = display
+    .channel(`test-display-${randomUUID()}`)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'sample_tasks' }, (payload) => {
+      received.push(payload);
+      if (payload.new && 'id' in payload.new && payload.new.id === task.id) resolveChanged();
+    })
+    .subscribe((status) => {
+      statuses.push(status);
+      if (status === 'SUBSCRIBED') resolveSubscribed();
+    });
+
+  try {
+    await withTimeout(subscribed, 5000, 'realtime subscription timed out');
+    const { error } = await renameTask(parentA, task.id, 'Realtime update');
+    assert.equal(error, null);
+    await withTimeout(
+      changed,
+      5000,
+      `realtime change timed out: statuses=${statuses.join(',')} events=${received.length}`,
+    );
+  } finally {
+    await channel.unsubscribe();
+    display.realtime.disconnect();
+  }
+});
+
 test('task state persists across a new session (restart)', opts, async () => {
   const before = await tasksOf(parentA);
   const again = await signedIn(`poc-a-${run}@example.test`);

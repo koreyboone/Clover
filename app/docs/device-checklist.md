@@ -86,9 +86,19 @@ Two different failures; record what you see for each.
   - [x] After Wi-Fi returns, the display recovers without re-pairing.
   - [ ] A tap on **I did it** while offline does not change anything on the server. (A clear offline state is task 1.7.)
 
+## Task 1.7 display offline behavior (iPad Mini 5)
+
+Run this against the updated app while the iPad is paired. These checks are required on-device before task 1.7 can be marked complete.
+
+- [x] With the task list loaded, note the displayed **Last synced** time.
+- [x] Turn Wi-Fi off. The last task list remains visible, the status changes to **Offline — showing saved data**, and the last-synced time remains unchanged.
+- [x] While offline, **I did it** is disabled and tapping it does not submit a task action.
+- [x] Turn Wi-Fi on. The display reconnects, refreshes its data, updates the synchronization time, and enables task actions without re-pairing.
+- [x] From a parent phone, rename a task. The display receives the change live; if realtime is unavailable, it appears through the polling fallback.
+
 ## Notes to record
 
-Reported by the household on 2026-10-16. Device OS versions, exact timings, and visual details were not provided.
+Task 1.5 results were reported by the household on 2026-10-16. Task 1.7 checks were reported passing on the iPad Mini 5 on 2026-10-17. The first offline attempt reached Safari's `ERR_INTERNET_DISCONNECTED` page; after the polling refresh was gated on a successful connection check, the household retried and reported all Task 1.7 checks passing. Device OS versions, exact timings, and visual details were not provided.
 
 ## What was already checked on the PC (not on devices)
 

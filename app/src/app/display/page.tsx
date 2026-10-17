@@ -1,7 +1,7 @@
 import { isAuthRetryableFetchError } from '@supabase/supabase-js';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { createServerSupabase } from '@/lib/supabase/server';
-import { AutoRefresh } from './auto-refresh';
+import { ClearDisplayCache, DisplayClient, type DisplaySnapshot } from './display-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +15,7 @@ const STATUS_LABEL: Record<string, string> = {
 function PairForm({ message }: { message?: string }) {
   return (
     <main className="shell">
+      <ClearDisplayCache />
       <h1>Pair this display</h1>
       {message && <p role="alert">{message}</p>}
       <p>
@@ -32,27 +33,18 @@ function PairForm({ message }: { message?: string }) {
   );
 }
 
-// Shown when Clover cannot be reached. The session is kept, so the display recovers by itself.
-function Reconnecting() {
-  return (
-    <main className="shell">
-      <AutoRefresh seconds={3} />
-      <h1>Reconnecting…</h1>
-      <p className="status" role="status">
-        Can't reach Clover right now. This will update by itself when the connection is back.
-      </p>
-    </main>
-  );
-}
-
 // The display has its own session. Anything that is not an active display gets the pairing screen.
 export default async function Display({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const { error } = await searchParams;
-  if (!isSupabaseConfigured()) return <PairForm message="This display is not available right now." />;
+  if (!isSupabaseConfigured()) {
+    return <DisplayClient initialSnapshot={null} />;
+  }
 
   const supabase = await createServerSupabase();
   const { data: auth, error: authError } = await supabase.auth.getUser();
-  if (authError && isAuthRetryableFetchError(authError)) return <Reconnecting />;
+  if (authError && isAuthRetryableFetchError(authError)) {
+    return <DisplayClient initialSnapshot={null} />;
+  }
 
   const notice = error === 'invalid' ? 'That code is not valid. Ask a parent for a new one.' : undefined;
   if (!auth.user) return <PairForm message={notice} />;
@@ -63,7 +55,7 @@ export default async function Display({ searchParams }: { searchParams: Promise<
     .select('name, households(name)')
     .eq('user_id', auth.user.id)
     .maybeSingle();
-  if (deviceError) return <Reconnecting />;
+  if (deviceError) return <DisplayClient initialSnapshot={null} />;
 
   if (!device) {
     return (
@@ -75,32 +67,19 @@ export default async function Display({ searchParams }: { searchParams: Promise<
     .from('sample_tasks')
     .select('id, title, status')
     .order('position');
-  if (tasksError) return <Reconnecting />;
+  if (tasksError) return <DisplayClient initialSnapshot={null} />;
 
   const household = Array.isArray(device.households) ? device.households[0] : device.households;
+  const snapshot: DisplaySnapshot = {
+    household: household?.name ?? 'Household',
+    deviceName: device.name,
+    tasks: tasks ?? [],
+    syncedAt: new Date().toISOString(),
+  };
   return (
-    <main className="shell">
-      <AutoRefresh seconds={5} />
-      <h1>{household?.name ?? 'Household'}</h1>
-      {error === 'action' && <p role="alert">That didn't work. Try again.</p>}
-      {tasks && tasks.length > 0 ? (
-        <ul className="tasks">
-          {tasks.map((t) => (
-            <li key={t.id} data-status={t.status}>
-              <span className="task-title">{t.title}</span>
-              <span className="task-status">{STATUS_LABEL[t.status] ?? t.status}</span>
-              {t.status === 'incomplete' && (
-                <form method="post" action="/display/tasks/done">
-                  <input type="hidden" name="task_id" value={t.id} />
-                  <button type="submit">I did it</button>
-                </form>
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="status">Display "{device.name}" is paired. No routine yet.</p>
-      )}
-    </main>
+    <DisplayClient
+      initialSnapshot={snapshot}
+      actionError={error === 'action'}
+    />
   );
 }
