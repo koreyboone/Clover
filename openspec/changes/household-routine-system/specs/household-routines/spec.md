@@ -17,6 +17,28 @@ The system SHALL present each participating child with the current routine and t
 - **WHEN** the five-year-old opens the shared display during a scheduled routine
 - **THEN** the display presents tasks with icons, offers optional audio, and includes no more than one parent-assisted task
 
+### Requirement: Routine interfaces use the shared visual system
+The system SHALL use an implemented, documented visual system for both the shared child display and parent interfaces. The child display SHALL be playful, child-centered, and motivating for participating children; parent interfaces SHALL be practical and polished. The visual system SHALL preserve existing routine behavior and authorization boundaries.
+
+#### Scenario: Child uses the shared display
+- **WHEN** a child uses a routine screen on the shared display
+- **THEN** the screen follows the implemented child-facing visual system and preserves the child's authorized routine interactions
+
+#### Scenario: Parent uses routine controls on a phone
+- **WHEN** a parent uses routine controls on a phone
+- **THEN** the interface follows the implemented parent-facing visual system and preserves the parent's authorized routine controls
+
+### Requirement: Routine interfaces meet accessibility and viewport criteria
+Routine interfaces SHALL meet WCAG 2.2 Level AA contrast: at least 4.5:1 for normal text, 3:1 for large text, and applicable non-text contrast. Interactive controls SHALL be keyboard-operable with visible focus, logical focus order, and accessible names. At supported target viewports, interfaces SHALL have no unintended horizontal overflow or clipped content.
+
+#### Scenario: Routine screen is tested for accessibility and layout
+- **WHEN** a routine screen is checked at a supported target viewport
+- **THEN** its text and applicable non-text contrast meet WCAG 2.2 Level AA, controls have accessible names and work by keyboard with visible focus and logical focus order, and no content is clipped or causes unintended horizontal overflow
+
+#### Scenario: UI change is reviewed
+- **WHEN** a routine interface is added or changed
+- **THEN** the change is checked against the implemented visual system, accessibility and viewport criteria, and existing functional behavior
+
 ### Requirement: Scheduled routines are highlighted without shaming
 The system SHALL highlight a routine when its configured start time arrives without using overdue labels, countdowns, red warning indicators, streaks, or sibling comparisons.
 

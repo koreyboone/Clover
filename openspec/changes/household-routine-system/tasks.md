@@ -11,13 +11,17 @@
 - [x] 1.7 Implement the stale read-only display state with last-synchronized time, disabled actions while disconnected, and refresh on reconnect, with realtime updates and a polling fallback; verify on the iPad by toggling connectivity.
 - [x] 1.8 Document setup, deployment, signing in devices, and the display session; verify the documented steps from a clean checkout.
 
+## Visual Design Foundation
+
+- [ ] 1.9 Start the app locally with isolated test data and capture indexed before screenshots of safely reachable screens and states before visual changes; define and document the visual direction, tokens, typography, spacing, iconography, reusable components, responsive rules, accessibility criteria, and review checklist; implement the reusable visual foundations and one polished representative child-display screen; verify contrast (WCAG 2.2 AA: 4.5:1 normal text, 3:1 large text, and applicable non-text contrast), keyboard operation, visible focus, logical focus order, accessible names, and no unintended horizontal overflow or clipped content at target browser viewports; record unreachable screens and limitations without accessing real hosted data or bypassing authorization.
+
 ## 2. Household Routine Experience
 
 - [ ] 2.1 Implement scheduled routine runs with fixed task and bonus-rule snapshots, completion state, help requests, rejected verification, and skip-day handling; verify tests cover schedule creation, that mid-run edits affect only the next run, and that rejected tasks return to incomplete.
-- [ ] 2.2 Implement parent phone controls for tasks, schedules, per-task verification, per-child hide/shorten settings, and exceptions; verify tests confirm one child's settings do not alter another's.
-- [ ] 2.3 Implement the shared-display child routine view with text for ages 9 and 10 and icons, optional audio, and at most one parent-assisted task for age 5; verify the views expose the next task and the older children can complete a routine without parent operation.
-- [ ] 2.4 Implement child task completion, immediate feedback, one-tap parent verification, and need-help completion; verify tests show awaiting-verification tasks do not count as complete and assistance counts only once recorded.
-- [ ] 2.5 Implement the scheduled routine cue without overdue labels, countdowns, red warning indicators, streaks, or sibling comparisons; verify UI tests confirm the cue and forbidden indicators are absent.
+- [ ] 2.2 Implement parent phone controls for tasks, schedules, per-task verification, per-child hide/shorten settings, and exceptions using the documented visual system and, once available, Task 1.9's reusable tokens and components; verify tests confirm one child's settings do not alter another's.
+- [ ] 2.3 After Task 1.9, implement the shared-display child routine view with text for ages 9 and 10 and icons, optional audio, and at most one parent-assisted task for age 5 using the documented visual system; verify the views expose the next task and the older children can complete a routine without parent operation.
+- [ ] 2.4 Apply the documented visual system when implementing child task completion, immediate feedback, one-tap parent verification, and need-help completion; verify tests show awaiting-verification tasks do not count as complete and assistance counts only once recorded.
+- [ ] 2.5 Apply the documented visual system when implementing the scheduled routine cue without overdue labels, countdowns, red warning indicators, streaks, or sibling comparisons; verify UI tests confirm the cue and forbidden indicators are absent.
 - [ ] 2.6 Document parent routine setup and exception handling; verify a representative parent can administer a normal routine day in two minutes or less, excluding genuine exceptions.
 
 ## 3. Family Rewards
@@ -25,9 +29,9 @@
 - [ ] 3.1 Implement the point ledger as transactional database functions with immutable entries and idempotency keys; verify tests cover atomic commits, retries, and concurrent requests that cannot award, charge, or release points twice.
 - [ ] 3.2 Implement configurable bonuses with the fixed full/partial/none decision sequence and integer limit validation at save and run creation; verify tests cover 0 <= L < N, invalid limits, zero-task routines, full, partial, none, assisted and unverified tasks, skipped runs, no deductions, and duplicate-run protection.
 - [ ] 3.3 Implement optional contributions with fixed parent-set values, per-child availability, parent confirmation, and duplicate-award protection; verify tests confirm only confirmed contributions award points once.
-- [ ] 3.4 Implement balances, reward catalog and progress, and instant redemption; verify tests cover immediate visible deductions, insufficient balances, and repeated attempts.
+- [ ] 3.4 Apply the documented visual system when implementing balances, reward catalog and progress, and instant redemption; verify tests cover immediate visible deductions, insufficient balances, and repeated attempts.
 - [ ] 3.5 Implement needs-approval redemption with point reservation, approve, and decline, showing the child why points are temporarily unavailable; verify tests cover reservation blocking double spending, approval finalizing the deduction, decline releasing without deduction, idempotent retries, and pending requests persisting across restart.
-- [ ] 3.6 Implement parent phone management of reward entries, types, costs, contributions, and point values; verify tests confirm saved changes apply to the intended child without altering other balances, and document reward administration.
+- [ ] 3.6 Apply the documented visual system when implementing parent phone management of reward entries, types, costs, contributions, and point values; verify tests confirm saved changes apply to the intended child without altering other balances, and document reward administration.
 
 ## 4. Data Ownership, Pilot Measurement, and Readiness
 
@@ -38,6 +42,6 @@
 - [ ] 4.5 Prepare the Phase 1 household configuration for ages 10, 9, and 5, with the pilot routine selected from the week-0 reminder tally; verify the configuration excludes the three-year-old and uses per-task verification appropriate to the participants.
 - [ ] 4.6 Write the pilot operating guide with the same direct reminder and board cue definitions across week 0, weeks 1-2, and weeks 3-4, plus the completion check, arguments, administration time, success criteria, and a numeric target deferred until baseline data exists; verify each element is covered.
 - [ ] 4.7 Run end-to-end tests across the display and both phones; verify routine completion, parent verification, bonus awards, reward redemption and approval, and recovery after a temporary disconnection.
-- [ ] 4.8 Verify the complete pilot flow on the iPad, iPhone, and Galaxy, including export and restore; document remaining platform limitations.
+- [ ] 4.8 Verify the complete pilot flow and visual system on the iPad, iPhone, and Galaxy, including export and restore; preserve functional behavior, record browser-emulated viewport results separately from physical-device results, and document remaining platform limitations.
 - [ ] 4.9 Add rate limiting to pairing-code redemption before any public exposure; verify repeated failed attempts are throttled and valid codes still work once, expire, and cannot be reused.
 - [ ] 4.10 Review every child-action database function added in groups 2 and 3; verify each enforces display identity, household scope, and current revocation status (`is_household_display`), with tests showing a revoked display's unexpired token is denied.

@@ -2,7 +2,9 @@
 
 ## Context
 
-The repository has no application implementation. Target devices are an iPad Mini 5 (shared display, not always plugged in), an iPhone 14, and a Galaxy S26 Ultra. iOS suspends background processes, so the iPad cannot reliably host a service; it is a client. See `proposal.md` and the `household-routines`, `family-rewards`, `household-data`, and `pilot-measurement` specs for behavior contracts.
+The proof-of-concept implementation uses Next.js, React, TypeScript, and a single global stylesheet. Its small set of color tokens and shared styles serve both the parent interface and child display; the current presentation is sparse and form-driven, without a distinct child-centered visual system. Target devices are an iPad Mini 5 (shared display, not always plugged in), an iPhone 14, and a Galaxy S26 Ultra. iOS suspends background processes, so the iPad cannot reliably host a service; it is a client. See `proposal.md` and the `household-routines`, `family-rewards`, `household-data`, and `pilot-measurement` specs for behavior contracts.
+
+The initial visual investigation found the local web app was not running, so no browser-rendered screenshots, viewport checks, or console observations were available. Task 1.9 must start the local app with isolated test data and capture an indexed before-baseline before making visual changes. It must report unreachable screens and states instead of fabricating them or bypassing authorization. Browser-emulated viewports are not physical-device verification.
 
 ## Goals / Non-Goals
 
@@ -15,6 +17,22 @@ The repository has no application implementation. Target devices are an iPad Min
 - Offline writes or offline-first operation.
 - Multiple households per parent account, child accounts, or language-model features.
 - Formal penetration testing in Phase 1.
+
+## Visual Design Foundation
+
+The child-facing shared display and parent interface are distinct interaction contexts that should share a coherent design system. The display should be playful, child-centered, and motivating for ages 5, 9, and 10; parent controls should remain practical and polished. Neither context may introduce shaming indicators or undermine the existing authorization, offline, or routine behavior.
+
+Task 1.9 establishes and implements the visual foundation before broader interface work:
+
+- Start the app locally using an isolated test household, audit the current implementation, and capture indexed before screenshots of safely reachable screens and states before changing their visual presentation. Keep screenshots outside the repository and record route, state, viewport, DPR, reachability, and console errors.
+- Define and document the visual direction, design tokens, typography, colors, spacing, iconography, reusable components, and component states; implement the reusable visual foundations in the app.
+- Implement one polished representative child-display screen using existing functionality, without pulling later routine, reward, or other feature work into this task.
+- Document responsive rules for iPad Mini 5 portrait (768 × 1024) and landscape (1024 × 768), iPhone 14 portrait (390 × 844), and an explicitly approximate Galaxy S26 Ultra viewport (412 × 915).
+- Validate the representative screen at the target browser viewports: no unintended horizontal overflow or clipped content; normal text contrast of at least 4.5:1, large text contrast of at least 3:1, and applicable non-text contrast; keyboard-operable controls with visible focus, logical focus order, and accessible names.
+- Define and document a repeatable visual-review checklist that applies to later UI work.
+- Record which screens are not implemented or could not be reached. Browser-emulated viewports are not physical-device verification.
+
+The implemented tokens and reusable components are used by subsequent parent and child UI implementation tasks. UI tasks must check visual consistency and preserve functional behavior. Task 2.2 may proceed without waiting for the representative display to be complete, but must use the documented design tokens and reusable components once established. Task 2.3 depends on Task 1.9. Physical-device validation remains part of the later pilot readiness work.
 
 ## Decisions
 
