@@ -74,7 +74,7 @@ Below 700 CSS pixels, the action moves below its task label. At 700 pixels and a
 
 ## Baseline screenshot index
 
-All captures are in `%TEMP%\clover-baseline\task-1.9\before` and are not committed. The parent account is synthetic; its email is replaced with `[test parent]`. The Next.js development toolbar was hidden in captures. Routes were reached through the local app and the synthetic local Supabase household only.
+All captures are committed under [`screenshots/before`](visual-design-system/screenshots/before) and [`screenshots/after`](visual-design-system/screenshots/after). The parent account is synthetic; its email is replaced with `[test parent]`. The Next.js development toolbar was hidden in captures. Routes were reached through the local app and the synthetic local Supabase household only.
 
 | File | Route and state | CSS viewport / DPR | Reachability and notes |
 | --- | --- | --- | --- |
@@ -95,7 +95,7 @@ No scheduled routine editor, child profiles, rewards, point history, or pilot lo
 
 ## After screenshots and verification record
 
-After captures are in `%TEMP%\clover-baseline\task-1.9\after`; they remain outside the repository.
+After captures are stored in [`screenshots/after`](visual-design-system/screenshots/after).
 
 | File | State | CSS viewport / DPR |
 | --- | --- | --- |
