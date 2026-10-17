@@ -100,7 +100,7 @@ After captures are in `%TEMP%\clover-baseline\task-1.9\after`; they remain outsi
 | File | State | CSS viewport / DPR |
 | --- | --- | --- |
 | `display-routine-iphone14-390x844.png` | Routine with three incomplete steps | 390 x 844 / 3 |
-| `display-routine-ipad-820x1180.png` | Routine with three incomplete steps, additional iPad preset | 820 x 1180 / 2 |
+| `display-routine-ipad-820x1180.png` | Routine with one incomplete, one complete, and one assisted step; additional iPad preset | 820 x 1180 / 2 |
 | `display-routine-ipad-portrait-768x1024.png` | Routine with three incomplete steps | 768 x 1024 / 1 |
 | `display-routine-ipad-landscape-1024x768.png` | Routine with three incomplete steps | 1024 x 768 / 1 |
 | `display-routine-galaxy-approx-412x915.png` | Routine with three incomplete steps | 412 x 915 / 1 |
